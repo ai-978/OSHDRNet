@@ -1,0 +1,9 @@
+torch>=2.1
+torchvision
+numpy
+opencv-python
+einops
+imageio
+tqdm
+tensorboard
+scikit-image
