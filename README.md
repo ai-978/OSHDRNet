@@ -2,16 +2,20 @@
 
 OSHDRNet is an observation-support-driven HDR reconstruction model for dynamic multi-exposure scenes. The complete code will be released upon acceptance of the paper.
 
-## Environment setup
+## Project structure
 
-```sh
-conda create -n oshdrnet python=3.10
-conda activate oshdrnet
-pip install torch torchvision
-pip install numpy opencv-python einops imageio tqdm tensorboard scikit-image
+```
+OSHDRNet
+├── dataset/          data loading (released upon acceptance)
+├── loss/             training objectives (released upon acceptance)
+├── lr_scheduler/     learning-rate schedule
+├── models/           RGA, DEA and ODC (released upon acceptance)
+├── utils/            utilities (released upon acceptance)
+├── train.py          two-stage training (released upon acceptance)
+└── test.py           evaluation (released upon acceptance)
 ```
 
-## Data preparation
+## Datasets
 
 The datasets used in this project are available from:
 
@@ -19,7 +23,7 @@ The datasets used in this project are available from:
 - [Tel's dataset](https://drive.google.com/drive/folders/1CtvUxgFRkS56do_Hea2QC7ztzglGfrlB)
 - [Hu's dataset](https://github.com/nadir-zeeshan/sensor-realistic-synthetic-data)
 
-Example structure:
+The directory structure of Kalantari's, Tel's and Hu's datasets is the same as in [AFUNet](https://github.com/eezkni/AFUNet). An example for Kalantari's dataset:
 
 ```
 data_root
@@ -30,43 +34,21 @@ data_root
     │   │   ├── 262A0899.tif
     │   │   ├── 262A0900.tif
     │   │   ├── exposure.txt
-    │   │   ├── HDRImg.hdr
+    │   │   └── HDRImg.hdr
     │   ├── 002
-    │   └── ...
+    │   ├── ...
+    │   └── 074
     └── Test
-        ├── 001
-        │   ├── 262A2615.tif
-        │   ├── 262A2616.tif
-        │   ├── 262A2617.tif
-        │   ├── exposure.txt
-        │   ├── HDRImg.hdr
-        └── ...
-```
-
-By default the scripts read the dataset from `../data/Kal`. Tel's dataset uses the same file names; for Hu's
-dataset, set `--exposure_file_name input_exp.txt` and `--label_file_name ref_hdr_aligned_linear.hdr`.
-
-## Running the model
-
-### Stage 1 Training (RGA and DEA)
-
-```sh
-python train.py
-```
-
-### Stage 2 Training (ODC)
-
-```sh
-python train_odc.py
-```
-
-### Testing
-
-`test.py` loads the final model (last epoch of stage 2) and runs evaluation; `--save_results` additionally saves the
-HDR results, tone-mapped previews and completion regions.
-
-```sh
-python test.py
+        └── Test-set
+            ├── 001
+            │   ├── 262A2615.tif
+            │   ├── 262A2616.tif
+            │   ├── 262A2617.tif
+            │   ├── exposure.txt
+            │   └── HDRImg.hdr
+            ├── 002
+            ├── ...
+            └── 015
 ```
 
 ## Acknowledgments
